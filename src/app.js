@@ -1,11 +1,11 @@
 import express from "express";
 
 // rutes
-import token from "./routers/token.js";
-import attendants from "./routers/attendants.route.js";
-import patients from "./routers/patients.route.js";
-import doctor from "./routers/doctor.router.js";
-import appointment from "./routers/appointment.route.js"; 
+import token from "./v1/routers/token.js";
+import attendants from "./v1/routers/attendants.route.js";
+import patients from "./v1/routers/patients.route.js";
+import doctor from "./v1/routers/doctor.router.js";
+import appointment from "./v1/routers/appointment.route.js"; 
 
 const app = express(); 
 

@@ -1,5 +1,5 @@
 import app from "./app.js";
-import enviroments from "./env/env.js";
+import enviroments from "./v1/env/env.js";
 
 const start = () => {
     try {

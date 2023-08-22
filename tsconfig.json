@@ -3,15 +3,15 @@
         "target": "es6",
         "module": "es6",
         "moduleResolution": "node",
-        "outDir": "src/storage",
+        "outDir": "src/v1/storage",
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
     },
     "include": [
-        "src/storage/*.ts"
+        "src/v1/storage/*.ts"    
     ],
     "exclude": [
-        "src/storage/*.js"
+        "src/v1/storage/*.js"
     ]
 }

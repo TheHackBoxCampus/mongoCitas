@@ -1,6 +1,6 @@
-import conx from "../../config/db.js";
+import conx from "../../../config/db.js";
 
-const getAppointments = async (req, res) => {
+const getAppointmentsV1 = async (req, res) => {
   try {
     let db = await conx();
     let collection = await db.collection("cita");
@@ -12,7 +12,7 @@ const getAppointments = async (req, res) => {
   }
 };
 
-const getAppointmentsForUserID = async (req, res) => {
+const getAppointmentsForUserIDV1 = async (req, res) => {
   try {
     let patientId = parseInt(req.params.paciente);
     let db = await conx();
@@ -63,7 +63,7 @@ const getAppointmentsForUserID = async (req, res) => {
   }
 };
 
-const getAppointmentsForDoctor = async (req, res) => {
+const getAppointmentsForDoctorV1 = async (req, res) => {
   try {
     let doctorId = parseInt(req.params.medico);
     let db = await conx();
@@ -102,7 +102,7 @@ const getAppointmentsForDoctor = async (req, res) => {
   }
 };
 
-const getAppointmentForconsultingRoom = async (req, res) => {
+const getAppointmentForconsultingRoomV1 = async (req, res) => {
   try {
     let patientId = parseInt(req.params.paciente);
     let db = await conx();
@@ -164,7 +164,7 @@ const getAppointmentForconsultingRoom = async (req, res) => {
   }
 };
 
-const getAppointmentForDate = async (req, res) => {
+const getAppointmentForDateV1 = async (req, res) => {
   try {
     let { fecha } = req.body;
     let db = await conx();
@@ -193,7 +193,7 @@ const getAppointmentForDate = async (req, res) => {
   }
 };
 
-const getAppointmentsForDateAndDoctor = async (req, res) => {
+const getAppointmentsForDateAndDoctorV1 = async (req, res) => {
   try {
     let { fecha, medico } = req.body;
     let db = await conx();
@@ -220,7 +220,7 @@ const getAppointmentsForDateAndDoctor = async (req, res) => {
   }
 };
 
-const getConsultingRooms = async (req, res) => {
+const getConsultingRoomsV1 = async (req, res) => {
   try {
     let db = await conx();
     let collection = await db.collection("cita");
@@ -254,7 +254,7 @@ const getConsultingRooms = async (req, res) => {
   }
 };
 
-const getAppointmentsForGenderAndStatus = async (req, res) => {
+const getAppointmentsForGenderAndStatusV1 = async (req, res) => {
   try {
     let genero = req.params.genero;
     let db = await conx();
@@ -322,12 +322,12 @@ const getAppointmentsForGenderAndStatus = async (req, res) => {
 };
 
 export {
-  getAppointments,
-  getAppointmentsForUserID,
-  getAppointmentsForDoctor,
-  getAppointmentForconsultingRoom,
-  getAppointmentForDate,
-  getAppointmentsForDateAndDoctor,
-  getConsultingRooms,
-  getAppointmentsForGenderAndStatus,
+  getAppointmentsV1,
+  getAppointmentsForUserIDV1,
+  getAppointmentsForDoctorV1,
+  getAppointmentForconsultingRoomV1,
+  getAppointmentForDateV1,
+  getAppointmentsForDateAndDoctorV1,
+  getConsultingRoomsV1,
+  getAppointmentsForGenderAndStatusV1,
 };

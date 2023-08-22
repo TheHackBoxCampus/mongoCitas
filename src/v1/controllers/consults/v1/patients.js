@@ -1,6 +1,6 @@
 import conx from "../../config/db.js"
 
-const getPattients = async (req,res) => {
+const getPattientsV1 = async (req,res) => {
     try {
         let db = await conx(); 
         let collection = await db.collection("usuario"); 
@@ -12,7 +12,7 @@ const getPattients = async (req,res) => {
     }
 }
 
-const pushNewPatient = async (req, res) => {
+const pushNewPatientV1 = async (req, res) => {
     try {
         
     }catch(err) {
@@ -20,4 +20,7 @@ const pushNewPatient = async (req, res) => {
     }
 }
 
-export default getPattients; 
+export {
+    getPattientsV1,
+    pushNewPatientV1
+} 
