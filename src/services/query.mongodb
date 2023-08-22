@@ -320,6 +320,12 @@ db.consultorio.insertOne({
     codigo: 21
 })
 
+use("citas_prueba")
+db.consultorio.insertOne({
+    _id: 2, 
+    codigo: 12
+})
+
 
 use("citas_prueba")
 db.createCollection("especialidad", {
