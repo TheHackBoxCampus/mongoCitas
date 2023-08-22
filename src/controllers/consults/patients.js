@@ -12,4 +12,8 @@ const getPattients = async (req,res) => {
     }
 }
 
+const pushNewPatient = async (req, res) => {
+        
+}
+
 export default getPattients; 
