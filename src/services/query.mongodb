@@ -1,0 +1,420 @@
+use("citas_prueba")
+db.createCollection("acudiente", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            title: "acudientes",
+            required: ["nombreCompleto", "telefono", "direccion"],
+            properties: {
+                _id: {
+                    bsonType: "int" 
+                },
+                nombreCompleto: {
+                    bsonType: "string",
+                    pattern: "^[A-Za-z\\s]+$"
+                },
+                telefono: {
+                    bsonType: "string",
+                    pattern: "^[0-9]+$"
+                },
+                direccion: {
+                    bsonType: "string",
+                }
+            }
+        }
+    }
+})
+
+use("citas_prueba")
+db.acudiente.insertOne({
+    _id: 1, 
+    nombreCompleto: "Oscar javier Ramirez estrada",
+    telefono: "12115454",
+    direccion: "carr 33"
+})
+
+use("citas_prueba")
+db.createCollection("tipo_documento", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            title: "tipos de documento",
+            required: ["nombre", "abreviatura"],
+            properties: {
+                _id: {
+                    bsonType: "int"
+                },
+                nombre: {
+                    bsonType: "string",
+                    pattern: "^[A-Za-z\\s]+$"
+                },
+                abreviatura: {
+                    bsonType: "string",
+                    pattern: "^[A-Z]{2}$"
+                }
+            }
+        }
+    }
+})
+
+use("citas_prueba")
+db.tipo_documento.insertOne({
+    _id: 1, 
+    nombre: "Cedula",
+    abreviatura: "CC"
+})
+
+db.tipo_documento.insertOne({
+    _id: 2, 
+    nombre: "Tarjeta identidad",
+    abreviatura: "TI"
+})
+
+use("citas_prueba")
+db.createCollection("genero", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            title: "generos",
+            required: ["nombre", "abreviatura"],
+            properties: {
+                _id: {
+                    bsonType: "int"
+                },
+                nombre: {
+                    bsonType: "string",
+                    pattern: "^[A-Za-z\\s]+$"
+                },
+                abreviatura: {
+                    bsonType: "string",
+                    pattern: "^[A-Z]{1}$"
+                }
+            }
+        }
+    }
+})
+
+use("citas_prueba")
+db.genero.insertOne({
+    _id: 1, 
+    nombre: "Masculino",
+    abreviatura: "M"
+})
+
+db.genero.insertOne({
+    _id: 2, 
+    nombre: "Femenino",
+    abreviatura: "F"
+})
+
+use("citas_prueba")
+db.createCollection("usuario", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            title: "usuarios",
+            required: ["nombres", "apellidos", "telefono", "direccion", "email", "tipo_documento", "genero"],
+            properties: {
+                _id: {
+                    bsonType: "int"
+                },
+                nombres: {
+                    bsonType: "string",
+                    pattern: "^[A-Za-z]+ [A-Za-z]+$"
+                },
+                apellidos: {
+                    bsonType: "string",
+                    pattern: "^[A-Za-z]+ [A-Za-z]+$"
+                },
+                telefono: {
+                    bsonType: "string",
+                    pattern: "^[0-9]+$"
+                },
+                direccion: {
+                    bsonType: "string",
+                },
+                email: {
+                    bsonType: "string",
+                    pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                },
+                tipo_documento: {
+                    bsonType: "int",
+                },
+                genero: {
+                    bsonType: "int",
+                },
+                acudiente: {
+                    bsonType: "int",
+                }
+            }
+        }
+    }
+})
+
+use("citas_prueba")
+db.usuario.insertOne({
+    _id: 1, 
+    nombres: "Miller Kaled",
+    apellidos: "Narino Ibarra",
+    telefono: "312121",
+    direccion: "carr 22",
+    email: "kalednarino@gmail.com",
+    tipo_documento: 2,
+    genero: 1,
+    acudiente: 1
+})
+
+db.usuario.insertOne({
+    _id: 2, 
+    nombres: "Javier Urruaga",
+    apellidos: "villa martinez",
+    telefono: "1313121",
+    direccion: "bogota 11",
+    email: "villa2@gmail.com",
+    tipo_documento: 1,
+    genero: 1,
+})
+
+
+use("citas_prueba")
+db.createCollection("cita", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            title: "citas",
+            required: ["fecha", "estado", "medico", "usuario"],
+            properties: {
+                _id: {
+                    bsonType: "int"
+                },
+                fecha: {
+                    bsonType: "string",
+                    pattern: "^[0-9]{2}/[0-9]{2}/[0-9]{2}+$"
+                },
+                estado: {
+                    bsonType: "int",
+                },
+                medico: {
+                    bsonType: "int",
+                },
+                usuario: {
+                    bsonType: "int",
+                }
+            }
+        }
+    }
+})
+
+use("citas_prueba")
+db.cita.insertOne({
+    _id: 1,
+    fecha: "23/08/21",
+    estado: 1,
+    medico: 1,
+    usuario: 1
+})
+
+use("citas_prueba")
+db.cita.insertOne({
+    _id: 2,
+    fecha: "23/09/10",
+    estado: 1,
+    medico: 1,
+    usuario: 1
+})
+
+use("citas_prueba")
+db.cita.insertOne({
+    _id: 3,
+    fecha: "22/01/10",
+    estado: 1,
+    medico: 1,
+    usuario: 1
+})
+
+use("citas_prueba")
+db.createCollection("estado_cita", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            title: "estados de las citas",
+            required: ["nombre"],
+            properties: {
+                _id: {
+                    bsonType: "int"
+                },
+                nombre: {
+                    bsonType: "string",
+                    pattern: "^[A-Za-z]+$"
+                }
+            }
+        }
+    }
+})
+
+
+use("citas_prueba")
+db.estado_cita.insertOne({
+    _id: 1,
+    nombre: "Pendiente"
+})
+
+
+use("citas_prueba")
+db.createCollection("medico", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            title: "medicos",
+            required: ["nombreCompleto", "consultorio", "especialidad"],
+            properties: {
+                _id: {
+                    bsonType: "int"
+                },
+                nombreCompleto: {
+                    bsonType: "string",
+                    pattern: "^[A-Za-z\\s]+$"
+                },
+                consultorio: {
+                    bsonType: "int"
+                },
+                especialidad: {
+                    bsonType: "int"
+                }
+            }
+        }
+    }
+})
+
+use("citas_prueba")
+db.medico.insertOne({
+    _id: 1, 
+    nombreCompleto: "Benjamin alfredo",
+    consultorio: 1, 
+    especialidad: 1
+})
+
+use("citas_prueba")
+db.createCollection("consultorio", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            title: "consultorios",
+            required: ["codigo"],
+            properties: {
+                _id: {
+                    bsonType: "int"
+                },
+                codigo: {
+                    bsonType: "int"
+                }
+            }
+        }   
+    }
+})
+
+
+use("citas_prueba")
+db.consultorio.insertOne({
+    _id: 1, 
+    codigo: 21
+})
+
+
+use("citas_prueba")
+db.createCollection("especialidad", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            title: "especialidad",
+            required: ["nombre"],
+            properties: {
+                _id: {
+                    bsonType: "int"
+                },
+                nombre: {
+                    bsonType: "string",
+                    pattern: "^[A-Za-z\\s]+$"
+                }
+            }
+        }   
+    }
+})
+
+use("citas_prueba")
+db.especialidad.insertOne({
+    _id: 1,
+    nombre: "general"
+})
+
+
+// consults
+
+use("citas_prueba")
+db.medico.aggregate(
+    {
+        $match: {
+            especialidad: 2
+        }
+    },
+    {
+        $lookup: {
+            from: "especialidad",
+            localField: "especialidad",
+            foreignField: "_id",
+            as: "especialidad"
+        }
+    },
+    {
+        $unwind: "$especialidad"
+    },
+
+    {
+        $project: {
+            _id: 0,
+            nombreCompleto: 1,
+            especialidad: {nombre:1}
+        }
+    }
+)
+
+
+
+use("citas_prueba")
+db.cita.aggregate(
+    {
+        $match: {
+            usuario: 1 
+        }
+    },
+    {
+        $lookup: {
+            from: "usuario",
+            localField: "usuario",
+            foreignField: "_id",
+            as: "datos_usuario"
+        }
+    },
+    {
+        $unwind: "$datos_usuario"
+    },
+    {
+        $lookup: {
+            from: "medico",
+            localField: "medico",
+            foreignField: "_id",
+            as: "datos_medico"
+        }
+    },
+    {
+        $unwind: "$datos_medico"
+    },
+    {
+        $project: {
+            _id: 0,
+            datos_usuario: {nombres:1, apellidos: 1},
+            datos_medico: {nombreCompleto: 1},
+            fecha: 1
+        }
+    }
+)
