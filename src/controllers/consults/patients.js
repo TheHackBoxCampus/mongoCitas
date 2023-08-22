@@ -13,7 +13,11 @@ const getPattients = async (req,res) => {
 }
 
 const pushNewPatient = async (req, res) => {
+    try {
         
+    }catch(err) {
+
+    }
 }
 
 export default getPattients; 
