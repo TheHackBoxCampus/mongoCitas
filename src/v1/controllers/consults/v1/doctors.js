@@ -47,20 +47,20 @@ const getDoctorsAndSpecializations = async (req, res) => {
         let consult = await collection.aggregate([
             {
                 $lookup: {
-                    from: "consultorio",
-                    localField: "consultorio",
+                    from: "especialidad",
+                    localField: "especialidad",
                     foreignField: "_id",
-                    as: "consultorio"
+                    as: "especialidad"
                 }
             },
             {
-                $unwind: "$consultorio"
+                $unwind: "$especialidad"
             },
             {
                 $project: {
                     _id: 0,
                     nombreCompleto: 1,
-                    consultorio: {codigo:1}
+                    especialidad: {nombre:1}
                 }
             }
         ]).toArray(); 
