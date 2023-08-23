@@ -1,15 +1,18 @@
 import { Router } from "express";
 import doctors from "../storage/doctors.js";
 import limit from "../limits/setting.limits.js"; 
+import routesVersioning from "express-routes-versioning";
 import { validateToken } from "../middleware/validateTokens/jwtVerify.js";
 // controllers
-import {getDoctorForSpecialization,
-       getDoctorsAndSpecializations} 
-from "../controllers/consults/v1/doctors.js";
+import {
+    optionsDoctorForSpecialization,
+    optionsDoctorsAndSpecializations
+} from "../support/version1.doctor.js"
 
 const doctor = Router(); 
+const version = routesVersioning(); 
 
-doctor.get("/doctores/:especialidad", limit, validateToken(doctors), getDoctorForSpecialization)
-doctor.get("/doctores/obtener/especializacion", limit, validateToken(doctors), getDoctorsAndSpecializations)
+doctor.get("/doctores/:especialidad", limit, validateToken(doctors), version(optionsDoctorForSpecialization))
+doctor.get("/doctores/obtener/especializacion", limit, validateToken(doctors), version(optionsDoctorsAndSpecializations))
 
 export default doctor; 
