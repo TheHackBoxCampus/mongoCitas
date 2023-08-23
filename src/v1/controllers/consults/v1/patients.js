@@ -14,9 +14,9 @@ const getPattientsV1 = async (req,res) => {
 
 const pushNewPatientV1 = async (req, res) => {
     try {
-        
+        res.send(req.body)
     }catch(err) {
-
+        console.log(err)
     }
 }
 
