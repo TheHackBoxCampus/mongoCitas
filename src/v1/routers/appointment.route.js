@@ -1,40 +1,29 @@
 import { Router } from "express";
-import routesVersioning from "express-routes-versioning"
 import appointments from "../storage/appointment.js";
+import routesVersioning from "express-routes-versioning";
 import limit from "../limits/setting.limits.js"
 import { validateToken } from "../middleware/validateTokens/jwtVerify.js"
-// controllers
-import {getAppointmentsV1, 
-        getAppointmentsForUserIDV1, 
-        getAppointmentsForDoctorV1,
-        getAppointmentForconsultingRoomV1,
-        getAppointmentForDateV1,
-        getAppointmentsForDateAndDoctorV1,
-        getConsultingRoomsV1,
-        getAppointmentsForGenderAndStatusV1
-} from "../controllers/consults/v1/appointment.js";
 
-const appointment = Router(); 
-let version = routesVersioning(); 
+// support version 
+import {
+    optionsAppointmentsGet,
+    optionsAppointmentUserId,
+    optionsAppoinmenstForDoctor,
+    optionsAppointmentsForConsultingRoom,
+    optionsAppoinmenstForDate,
+    optionsAppointmentForDateAndDoctor,
+    optionsConsultingRooms,
+    optionsAppointmentsForGenderAndStatus
+} from "../support/version1.appointment.js"
 
 /**
- * ! VERSIONS
+  @param appointment = Rute 
+  @param version = versions 
  */
 
-// getting data from collections of mongo 
-let optionsAppointmentsGet = {
-    "~1.0.0": getAppointmentsV1
-}
+let version = routesVersioning();
+const appointment = Router(); 
 
-// getting data from collection of mongo for user ID 
-let optionsAppointmentUserId = {
-    "~1.0.0": getAppointmentsForUserIDV1
-}
-
-// getting data from collection of mongo for doctor
-let optionsAppoinmenstForDoctor = {
-    "~1.0.0": getAppointmentsForDoctorV1
-}
 
 /**
  * ! ROUTES AND THEIR VERSIONS
@@ -43,10 +32,10 @@ let optionsAppoinmenstForDoctor = {
 appointment.get("/citas", limit, validateToken(appointments), version(optionsAppointmentsGet))
 appointment.get("/citas/:paciente", limit, validateToken(appointments), version(optionsAppointmentUserId))
 appointment.get("/citas/medico/:medico", limit, validateToken(appointments), version(optionsAppoinmenstForDoctor))
-appointment.get("/citas/consultorio/:paciente", limit, validateToken(appointments), getAppointmentForconsultingRoom)
-appointment.get("/fecha/cita", limit, validateToken(appointments), getAppointmentForDate)
-appointment.get("/cantidad/citas", limit, validateToken(appointments), getAppointmentsForDateAndDoctor)
-appointment.get("/consultorios/citas", limit, validateToken(appointments), getConsultingRooms)
-appointment.get("/genero/citas/:genero", limit, validateToken(appointments), getAppointmentsForGenderAndStatus)
+appointment.get("/citas/consultorio/:paciente", limit, validateToken(appointments), version(optionsAppointmentsForConsultingRoom))
+appointment.get("/fecha/cita", limit, validateToken(appointments), version(optionsAppoinmenstForDate))
+appointment.get("/cantidad/citas", limit, validateToken(appointments), version(optionsAppointmentForDateAndDoctor))
+appointment.get("/consultorios/citas", limit, validateToken(appointments), version(optionsConsultingRooms))
+appointment.get("/genero/citas/:genero", limit, validateToken(appointments), version(optionsAppointmentsForGenderAndStatus))
 
 export default appointment; 
