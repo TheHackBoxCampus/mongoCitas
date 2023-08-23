@@ -1,4 +1,4 @@
-import conx from "../../config/db.js";
+import conx from "../../../config/db.js";
 
 const getDoctorForSpecialization = async(req, res) => {
     try {
