@@ -2,36 +2,31 @@ import { Expose, Transform } from "class-transformer";
 import { IsDefined } from "class-validator";
 
 class patients {
-  @Expose({ name: "nombre" })
+  @Expose({ name: "nombres" })
   @IsDefined({
     message: () => {
-      throw "Parametro nombre es necesario!";
+      throw "Parametro nombres es necesario!";
     },
   })
+  // @Transform(({value}) => {
+  //   if(typeof value != "string") throw "tipo de dato incorrecto!"
+  //   if(/^[A-Za-z]+ [A-Za-z]+$/.test(value) == false) throw "Parametro nombres incorrecto!" 
+  //   return value
+  // }, {toClassOnly: true})
   nm: string;
 
-  @Expose({ name: "segundo_nombre" })
+  @Expose({ name: "apellidos" })
   @IsDefined({
     message: () => {
-      throw "Parametro segundo nombre es necesario!";
+      throw "Parametro apellidos es necesario!";
     },
   })
-  snm: string;
-  @Expose({ name: "apellido" })
-  @IsDefined({
-    message: () => {
-      throw "Parametro apellido es necesario!";
-    },
-  })
+  // @Transform(({value}) => {
+  //   if(typeof value != "string") throw "tipo de dato incorrecto!"
+  //   if(/^[A-Za-z]+ [A-Za-z]+$/.test(value) == false) throw "Parametro apellidos incorrecto!" 
+  //   return value
+  // }, {toClassOnly: true})
   lnm: string;
-
-  @Expose({ name: "segundo_apellido" })
-  @IsDefined({
-    message: () => {
-      throw "Parametro segundo apellido es necesario!";
-    },
-  })
-  slnm: string;
 
   @Expose({ name: "telefono" })
   @IsDefined({
@@ -39,15 +34,25 @@ class patients {
       throw "Parametro telefono es necesario!";
     },
   })
+  // @Transform(({value}) => {
+  //   if(typeof value != "string") throw "tipo de dato incorrecto!";
+  //   if(/^[0-9]+$/.test(value) == false) throw "Parametro telefono incorrecto!";
+  //   return value
+  // }, {toClassOnly:true}) 
   tl: string;
-
+ 
   @Expose({ name: "direccion" })
   @IsDefined({
     message: () => {
       throw "Parametro direccion es necesario!";
     },
   })
-  dr: string;
+  // @Transform(({value}) => {
+  //   if(typeof value != "string") throw "tipo de dato incorrecto!"
+  //   if(/^(Calle|Carrera|Diagonal)\\s\\d{2}\\s#\\d{2}-\\d{2}\\s[a-zA-Z\\s]+$/.test(value) == false) throw "Parametro direccion incorrecto!"
+  //   return value
+  // }, {toClassOnly:true})
+  dr: string; 
 
   @Expose({ name: "email" })
   @IsDefined({
@@ -55,6 +60,11 @@ class patients {
       throw "Parametro email es necesario!";
     },
   })
+  // @Transform(({value}) => {
+  //   if(typeof value != "string") throw "tipo de dato incorrecto!"
+  //   if(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) == false) throw "Parametro email incorrecto!"
+  //   return value
+  // }, {toClassOnly: true})
   em: string;
 
   @Expose({ name: "tipo_documento" })
@@ -63,6 +73,10 @@ class patients {
       throw "Parametro tipo_documento es necesario!";
     },
   })
+  // @Transform(({value}) => {
+  //   if(typeof value != "string") throw "tipp de dato incorrecto!";
+  //   return value; 
+  // }, {toClassOnly: true})
   tpd: number;
 
   @Expose({ name: "genero" })
@@ -71,6 +85,10 @@ class patients {
       throw "Parametro tipo_documento es necesario!";
     },
   })
+  // @Transform(({value}) => {
+  //   if(typeof value != "string") throw "tipp de dato incorrecto!";
+  //   return value; 
+  // }, {toClassOnly: true})
   g: number;
 
   @Expose({ name: "acudiente" })
@@ -79,9 +97,7 @@ class patients {
   constructor(data: Partial<patients>) {
     Object.assign(this, data);
     this.nm = "guest";
-    this.snm = "guest2";
     this.lnm = "lastguest";
-    this.slnm = "lastguest2";
     this.tl = "0";
     this.dr = "default";
     this.em = "example@gmail.com";
