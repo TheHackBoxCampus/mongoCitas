@@ -5,7 +5,7 @@ import { validateToken } from "../middleware/validateTokens/jwtVerify.js";
 // controllers
 import {getDoctorForSpecialization,
        getDoctorsAndSpecializations} 
-from "../controllers/consults/doctors.js";
+from "../controllers/consults/v1/doctors.js";
 
 const doctor = Router(); 
 
