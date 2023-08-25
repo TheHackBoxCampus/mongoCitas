@@ -1,5 +1,5 @@
-import { Expose, Transform } from "class-transformer";
-import { IsDefined } from "class-validator";
+import { Expose } from "class-transformer";
+import { IsDefined, IsString, IsInt, IsEmail } from "class-validator";
 
 class patients {
   @Expose({ name: "nombres" })
@@ -8,11 +8,9 @@ class patients {
       throw "Parametro nombres es necesario!";
     },
   })
-  // @Transform(({value}) => {
-  //   if(typeof value != "string") throw "tipo de dato incorrecto!"
-  //   if(/^[A-Za-z]+ [A-Za-z]+$/.test(value) == false) throw "Parametro nombres incorrecto!" 
-  //   return value
-  // }, {toClassOnly: true})
+  @IsString({
+    message: () => { throw "tipo de dato incorrecto!" }
+  })
   nm: string;
 
   @Expose({ name: "apellidos" })
@@ -21,11 +19,9 @@ class patients {
       throw "Parametro apellidos es necesario!";
     },
   })
-  // @Transform(({value}) => {
-  //   if(typeof value != "string") throw "tipo de dato incorrecto!"
-  //   if(/^[A-Za-z]+ [A-Za-z]+$/.test(value) == false) throw "Parametro apellidos incorrecto!" 
-  //   return value
-  // }, {toClassOnly: true})
+  @IsString({
+    message: () => { throw "tipo de dato incorrecto!" }
+  })
   lnm: string;
 
   @Expose({ name: "telefono" })
@@ -34,25 +30,21 @@ class patients {
       throw "Parametro telefono es necesario!";
     },
   })
-  // @Transform(({value}) => {
-  //   if(typeof value != "string") throw "tipo de dato incorrecto!";
-  //   if(/^[0-9]+$/.test(value) == false) throw "Parametro telefono incorrecto!";
-  //   return value
-  // }, {toClassOnly:true}) 
+  @IsString({
+    message: () => { throw "tipo de dato incorrecto!" }
+  })
   tl: string;
- 
+
   @Expose({ name: "direccion" })
   @IsDefined({
     message: () => {
       throw "Parametro direccion es necesario!";
     },
   })
-  // @Transform(({value}) => {
-  //   if(typeof value != "string") throw "tipo de dato incorrecto!"
-  //   if(/^(Calle|Carrera|Diagonal)\\s\\d{2}\\s#\\d{2}-\\d{2}\\s[a-zA-Z\\s]+$/.test(value) == false) throw "Parametro direccion incorrecto!"
-  //   return value
-  // }, {toClassOnly:true})
-  dr: string; 
+  @IsString({
+    message: () => { throw "tipo de dato incorrecto!" }
+  })
+  dr: string;
 
   @Expose({ name: "email" })
   @IsDefined({
@@ -60,11 +52,13 @@ class patients {
       throw "Parametro email es necesario!";
     },
   })
-  // @Transform(({value}) => {
-  //   if(typeof value != "string") throw "tipo de dato incorrecto!"
-  //   if(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) == false) throw "Parametro email incorrecto!"
-  //   return value
-  // }, {toClassOnly: true})
+  @IsString({
+    message: () => { throw "tipo de dato incorrecto!" }
+  })
+
+  @IsEmail(undefined, {
+    message: () => {throw "Parametro email incorrecto!"}
+  })
   em: string;
 
   @Expose({ name: "tipo_documento" })
@@ -73,22 +67,20 @@ class patients {
       throw "Parametro tipo_documento es necesario!";
     },
   })
-  // @Transform(({value}) => {
-  //   if(typeof value != "string") throw "tipp de dato incorrecto!";
-  //   return value; 
-  // }, {toClassOnly: true})
+  @IsInt({
+    message: () => { throw "tipo de dato incorrecto!" }
+  })
   tpd: number;
 
   @Expose({ name: "genero" })
   @IsDefined({
     message: () => {
-      throw "Parametro tipo_documento es necesario!";
+      throw "Parametro genero es necesario!";
     },
   })
-  // @Transform(({value}) => {
-  //   if(typeof value != "string") throw "tipp de dato incorrecto!";
-  //   return value; 
-  // }, {toClassOnly: true})
+  @IsInt({
+    message: () => { throw "tipo de dato incorrecto!" }
+  })
   g: number;
 
   @Expose({ name: "acudiente" })

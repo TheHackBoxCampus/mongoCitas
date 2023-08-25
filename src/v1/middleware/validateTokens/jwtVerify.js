@@ -10,7 +10,7 @@ const isEqual = (cls, decoded) => {
 
 const validateToken = (cls) => (req, res, next) => {
     passport.authenticate("bearer", {session: false}, (err, decoded) => {
-        if(err) res.status(401).send({status: 401, message: "Erro en la autenticacion!"})
+        if(err) res.status(401).send({status: 401, message: "Error en la autenticacion!"})
         else {
             let filter = Object.entries(decoded).map(p => p[0] != "iat" && p[0] != "exp" ? p : false).filter(Boolean); 
             let reformate = Object.fromEntries(filter); 

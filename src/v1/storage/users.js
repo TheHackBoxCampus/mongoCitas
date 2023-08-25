@@ -8,14 +8,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Expose } from "class-transformer";
-import { IsDefined } from "class-validator";
+import { IsDefined, IsString, IsInt, IsEmail } from "class-validator";
 class patients {
     constructor(data) {
         Object.assign(this, data);
         this.nm = "guest";
-        this.snm = "guest2";
         this.lnm = "lastguest";
-        this.slnm = "lastguest2";
         this.tl = "0";
         this.dr = "default";
         this.em = "example@gmail.com";
@@ -24,47 +22,38 @@ class patients {
     }
 }
 __decorate([
-    Expose({ name: "nombre" }),
+    Expose({ name: "nombres" }),
     IsDefined({
         message: () => {
-            throw "Parametro nombre es necesario!";
+            throw "Parametro nombres es necesario!";
         },
+    }),
+    IsString({
+        message: () => { throw "tipo de dato incorrecto!"; }
     }),
     __metadata("design:type", String)
 ], patients.prototype, "nm", void 0);
 __decorate([
-    Expose({ name: "segundo_nombre" }),
+    Expose({ name: "apellidos" }),
     IsDefined({
         message: () => {
-            throw "Parametro segundo nombre es necesario!";
+            throw "Parametro apellidos es necesario!";
         },
     }),
-    __metadata("design:type", String)
-], patients.prototype, "snm", void 0);
-__decorate([
-    Expose({ name: "apellido" }),
-    IsDefined({
-        message: () => {
-            throw "Parametro apellido es necesario!";
-        },
+    IsString({
+        message: () => { throw "tipo de dato incorrecto!"; }
     }),
     __metadata("design:type", String)
 ], patients.prototype, "lnm", void 0);
-__decorate([
-    Expose({ name: "segundo_apellido" }),
-    IsDefined({
-        message: () => {
-            throw "Parametro segundo apellido es necesario!";
-        },
-    }),
-    __metadata("design:type", String)
-], patients.prototype, "slnm", void 0);
 __decorate([
     Expose({ name: "telefono" }),
     IsDefined({
         message: () => {
             throw "Parametro telefono es necesario!";
         },
+    }),
+    IsString({
+        message: () => { throw "tipo de dato incorrecto!"; }
     }),
     __metadata("design:type", String)
 ], patients.prototype, "tl", void 0);
@@ -75,6 +64,9 @@ __decorate([
             throw "Parametro direccion es necesario!";
         },
     }),
+    IsString({
+        message: () => { throw "tipo de dato incorrecto!"; }
+    }),
     __metadata("design:type", String)
 ], patients.prototype, "dr", void 0);
 __decorate([
@@ -83,6 +75,12 @@ __decorate([
         message: () => {
             throw "Parametro email es necesario!";
         },
+    }),
+    IsString({
+        message: () => { throw "tipo de dato incorrecto!"; }
+    }),
+    IsEmail(undefined, {
+        message: () => { throw "Parametro email incorrecto!"; }
     }),
     __metadata("design:type", String)
 ], patients.prototype, "em", void 0);
@@ -93,14 +91,20 @@ __decorate([
             throw "Parametro tipo_documento es necesario!";
         },
     }),
+    IsInt({
+        message: () => { throw "tipo de dato incorrecto!"; }
+    }),
     __metadata("design:type", Number)
 ], patients.prototype, "tpd", void 0);
 __decorate([
     Expose({ name: "genero" }),
     IsDefined({
         message: () => {
-            throw "Parametro tipo_documento es necesario!";
+            throw "Parametro genero es necesario!";
         },
+    }),
+    IsInt({
+        message: () => { throw "tipo de dato incorrecto!"; }
     }),
     __metadata("design:type", Number)
 ], patients.prototype, "g", void 0);

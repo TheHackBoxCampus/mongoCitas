@@ -9,8 +9,6 @@ const patients_md = async (req, res, next) => {
         else {
             const instance = plainToClass(patients, req.body);
             await validate(instance);
-      
-          
             return next();
         }
     }catch(err) {
