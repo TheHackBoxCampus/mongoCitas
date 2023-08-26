@@ -274,8 +274,8 @@ const getAppointmentsForGenderAndStatusV1 = async (req, res) => {
         },
         {
           $lookup: {
-            from: "genero", 
-            localField: "paciente.genero", 
+            from: "genero",
+            localField: "paciente.genero",
             foreignField: "_id",
             as: "genero",
           },
@@ -288,16 +288,16 @@ const getAppointmentsForGenderAndStatusV1 = async (req, res) => {
             from: "estado_cita",
             localField: "estado",
             foreignField: "_id",
-            as: "estado"
-          }
+            as: "estado",
+          },
         },
         {
           $unwind: "$estado",
         },
         {
           $match: {
-            "genero.nombre": genero, 
-            "estado.nombre": "Atendida"
+            "genero.nombre": genero,
+            "estado.nombre": "Atendida",
           },
         },
         {
@@ -307,13 +307,72 @@ const getAppointmentsForGenderAndStatusV1 = async (req, res) => {
             paciente: {
               _id: "$paciente._id",
               nombre: "$paciente.nombre",
-              estado: "$estado.nombre"
+              estado: "$estado.nombre",
             },
           },
         },
       ])
       .toArray();
 
+    return res.status(200).send(consult);
+  } catch (err) {
+    res.sendStatus(500);
+    console.log(err);
+  }
+};
+
+const getAppointmentsRejectedV1 = async (req, res) => {
+  try {
+    let db = await conx();
+    let collection = await db.collection("cita");
+    let year = req.params.ano;
+    let month = req.params.mes;
+    // search
+    let consult = await collection
+      .aggregate([
+        {
+          $lookup: {
+            from: "usuario",
+            localField: "usuario",
+            foreignField: "_id",
+            as: "usuario"
+          }
+        },
+        {
+          $unwind: "$usuario"
+        },
+        {
+          $lookup: {
+            from: "estado_cita",
+            localField: "estado",
+            foreignField: "_id",
+            as: "estado"
+          }
+        },
+        {
+          $unwind: "$estado"
+        },
+        {
+          $match: {
+              $expr: {
+                $and: [
+                  { $eq: [{ $substr: ["$fecha", 0, 2] }, year] },
+                  { $eq: [{ $substr: ["$fecha", 3, 2] }, month] }
+                ],
+              },
+              "estado.nombre" : "Rechazado"
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            fecha: 1,
+            usuario: {nombres: 1},
+            estado: {nombre: 1}
+          }
+        }
+      ])
+      .toArray();
     return res.status(200).send(consult);
   } catch (err) {
     res.sendStatus(500);
@@ -330,4 +389,5 @@ export {
   getAppointmentsForDateAndDoctorV1,
   getConsultingRoomsV1,
   getAppointmentsForGenderAndStatusV1,
+  getAppointmentsRejectedV1
 };
