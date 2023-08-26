@@ -7,6 +7,7 @@ import {
   getAppointmentsForDateAndDoctorV1,
   getConsultingRoomsV1,
   getAppointmentsForGenderAndStatusV1,
+  getAppointmentsRejectedV1
 } from "../controllers/consults/v1/appointment.js";
 
 /**
@@ -53,6 +54,10 @@ let optionsAppointmentsForGenderAndStatus = {
   "1.0.0": getAppointmentsForGenderAndStatusV1
 }
 
+let optionsAppointmentRejected = {
+  "1.0.0": getAppointmentsRejectedV1
+}
+
 
 export  {
     optionsAppointmentsGet,
@@ -62,5 +67,6 @@ export  {
     optionsAppoinmenstForDate,
     optionsAppointmentForDateAndDoctor,
     optionsConsultingRooms,
-    optionsAppointmentsForGenderAndStatus
+    optionsAppointmentsForGenderAndStatus,
+    optionsAppointmentRejected
 }
