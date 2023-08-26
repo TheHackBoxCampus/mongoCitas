@@ -42,22 +42,29 @@ const pushNewPatientV1 = async (req, res) => {
                 message: "El valor tipo_documento no cumple con los estandares!"
             }},
 
-            "false":  () => { throw {
-                status: 400,
-                message: "El valor genero no cumple con los estandares!"
-            }},
-
             "default": () => { return {
                 status: 201,
                 message: "registro exitoso!"
             }}
         }
         // verify age
-        // TODO: Resolver el bug de genero
-        let gender = `${data.genero < 1 || data.genero > 2 ? false : true}`
         let match = `${data.acudiente ? true : false}-${data.tipo_documento < 1 || data.tipo_documento > 2 ? false : data.tipo_documento}`;
-        let validate = responses[match] || responses[gender] ? true : false
-        let response = validate ? responses[match]() || responses[gender]() : responses["default"]() ; 
+        let validate = responses[match] ? true : false
+        let response = validate ? responses[match]() : responses["default"](); 
+ 
+        
+        // verify gender
+        let gender = `${data.genero > 2 || data.genero < 1 ? false : true}`  
+        let genderOptions = {
+            "false":  () => { throw {
+                status: 400,
+                message: "El valor genero no cumple con los estandares!"
+            }},
+        }
+        let existOption = genderOptions[gender] ? true : false
+        let resposeGender = existOption ? genderOptions[gender]() : responses["default"]();  
+        existOption ? response = resposeGender : response = response
+        
         let {...registers} = data;
  
         // insert 
@@ -73,7 +80,7 @@ const pushNewPatientV1 = async (req, res) => {
             let {errInfo: {details: {schemaRulesNotSatisfied: [{operatorName}]}}} = err
             let prop = errs[operatorName]
             res.send(prop)
-        }else { res.send(err == "" ? err.message : err.message)}
+        }else { res.status(400).send(err == "" ? err.message : err)}
     }
 }
 
