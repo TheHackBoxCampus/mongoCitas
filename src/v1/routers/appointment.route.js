@@ -13,7 +13,8 @@ import {
     optionsAppoinmenstForDate,
     optionsAppointmentForDateAndDoctor,
     optionsConsultingRooms,
-    optionsAppointmentsForGenderAndStatus
+    optionsAppointmentsForGenderAndStatus,
+    optionsAppointmentRejected
 } from "../support/version1.appointment.js"
 
 /**
@@ -37,5 +38,6 @@ appointment.get("/fecha/cita", limit, validateToken(appointments), version(optio
 appointment.get("/cantidad/citas", limit, validateToken(appointments), version(optionsAppointmentForDateAndDoctor))
 appointment.get("/consultorios/citas", limit, validateToken(appointments), version(optionsConsultingRooms))
 appointment.get("/genero/citas/:genero", limit, validateToken(appointments), version(optionsAppointmentsForGenderAndStatus))
+appointment.get("/fechaCitas/:ano/:mes", limit, validateToken(appointments), version(optionsAppointmentRejected))
 
 export default appointment; 
